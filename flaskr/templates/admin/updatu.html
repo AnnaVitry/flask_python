@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Edit "{{ user['username'] }}"{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <form method="post">
+    <label for="username">Login</label>
+    <input name="username" id="username" value="{{ request.form['username'] or user['username'] }}" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" value="{{ request.form['password'] or user['password'] }}" required>
+    {% if user['role']=="ROLE_ADMIN"%}
+    <div>
+      <input type=checkbox class="body" name="role" id="role" checked>
+      <label for="role">Administrator</label>
+    </div>
+    {% else %}
+    <div>
+      <input type=checkbox class="body" name="role" id="role">
+      <label for="role">Administrator</label>
+    </div>
+    {% endif %}
+    <input type="submit" value="Save">
+  </form>
+  <hr>
+  <form action="{{ url_for('admin.deletu', id=user['id']) }}" method="post">
+    <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+  </form>
+{% endblock %}

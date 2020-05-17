@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+{% endblock %}
+
+{% block content %}
+  <article>
+    <h1>{% block title %}{{ post['title'] }}{% endblock %}</h1>
+  <p class='body'>{{ post['body'] }}</p>
+  </article><hr>
+  <section class='post'>
+    <div style="display: flex; align-items: center">
+      <h1>Comments</h1>
+      <a class="action" href="{{ url_for('post.creatc', id=post['id']) }}" style="padding-left: 70%;">New Comment</a>
+    </div>
+    {% for comment in comments %}
+    <div style="display: flex;align-items: center">
+      <div class="about">by {{ comment['username'] }} on {{ comment['created_at_comment'].strftime('%Y-%m-%d') }}</div> 
+      {% if g.user['id'] == comment['author_comment_id'] %}
+      <a class="action" href="{{ url_for('post.updatc', id=comment['id']) }}" style="padding-left: 60%;">Edit</a></div>
+      {% endif %}
+      <p>{{ comment['content'] }}</p>
+    {% endfor %}
+  </section><hr>
+{% endblock %}

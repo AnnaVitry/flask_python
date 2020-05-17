@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% block header %}
+  <h1>{% block title %}USERS{% endblock %}</h1>
+  <div>
+    <a class="button" href="{{ url_for('admin.creatu') }}">New User</a>
+  </div>
+{% endblock %}
+
+{% block content %}
+  {% for user in users %}
+      <table id='help' style="font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;">
+        <tr style="border: 1px solid #ddd;
+        padding: 8px">
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">Login</th>
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">Role</th>
+          <th  style="border: 1px solid #ddd;
+          padding: 8px;">Created at</th>
+          <th  style="border: 1px solid #ddd;
+          padding: 8px;">Action</th>
+        </tr>
+        <tr style="border: 1px solid #ddd;
+        padding: 8px">
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">{{ user['username'] }}</th>
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">{{ user['role'] }}</th>
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">{{ user['created_at'].strftime('%Y-%m-%d') }}</th>
+          <th style="border: 1px solid #ddd;
+          padding: 8px;">
+            <div>
+              <a id="but" href="{{ url_for('admin.updatu', id=user['id']) }}">Edit</a>
+            </div>
+          </th>
+        </tr>
+      </table>
+    {% if not loop.last %}
+      <hr>
+    {% endif %}
+  {% endfor %}
+{% endblock %}
